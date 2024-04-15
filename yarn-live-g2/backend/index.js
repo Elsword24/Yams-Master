@@ -2,7 +2,7 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 var uniqid = require('uniqid');
-const GameService = require('./services/game.service');
+const GameService = require('./services/game.services');
 
 // ---------------------------------------------------
 // -------- CONSTANTS AND GLOBAL VARIABLES -----------
