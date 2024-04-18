@@ -101,6 +101,13 @@ io.on("connection", (socket) => {
 
     updateClientsViewDecks(games[gameIndex]);
   }); 
+  socket.on('game.dices.lock', (idDice) => {
+    const gameIndex = GameService.utils.findGameIndexBySocketId(games, socket.id);
+    const diceIndex = GameService.utils.findDiceIndexByDiceId(games[gameIndex].gameState.deck.dices, idDice);
+    games[gameIndex].gameState.deck.dices[diceIndex].locked = !games[gameIndex].gameState.deck.dices[diceIndex].locked;
+
+    updateClientsViewDecks(games[gameIndex]);
+  });
   socket.on("disconnect", (reason) => {
     console.log(`[${socket.id}] socket disconnected - ${reason}`);
   });
