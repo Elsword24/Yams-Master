@@ -1,12 +1,10 @@
-// app/components/board/decks/player-deck.component.js
-
 import React, { useState, useContext, useEffect } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { SocketContext } from "../../../contexts/socket.context";
 import Dice from "./dice.component";
 
 const PlayerDeck = () => {
-
+  
   const socket = useContext(SocketContext);
   const [displayPlayerDeck, setDisplayPlayerDeck] = useState(false);
   const [dices, setDices] = useState(Array(5).fill(false));
@@ -17,18 +15,24 @@ const PlayerDeck = () => {
   useEffect(() => {
 
     socket.on("game.deck.view-state", (data) => {
+
       setDisplayPlayerDeck(data['displayPlayerDeck']);
+
       if (data['displayPlayerDeck']) {
         setDisplayRollButton(data['displayRollButton']);
         setRollsCounter(data['rollsCounter']);
         setRollsMaximum(data['rollsMaximum']);
         setDices(data['dices']);
       }
+
     });
+
   }, []);
 
   const toggleDiceLock = (index) => {
+
     const newDices = [...dices];
+
     if (newDices[index].value !== '' && displayRollButton) {
       socket.emit("game.dices.lock", newDices[index].id);
     }

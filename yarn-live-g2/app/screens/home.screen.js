@@ -1,8 +1,7 @@
-// app/screens/home.screen.js
-
 import { StyleSheet, View, Button } from "react-native";
 
 export default function HomeScreen({ navigation }) {
+
   return (
     <View style={styles.container}>
       <View>
@@ -20,6 +19,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
