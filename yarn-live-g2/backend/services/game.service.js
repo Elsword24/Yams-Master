@@ -81,10 +81,13 @@ const GAME_INIT = {
         player1Score: 0,
         player2Score: 0,
         choices: {},
-        deck: {}
+        deck: {},
+        tokens: {
+            'player:1':12,
+            'player:2':12,
+        } 
     }
 }
-
 const GameService = {
 
     init: {
@@ -314,10 +317,16 @@ const GameService = {
             return updatedGrid;
         },
 
-        selectCell: (idCell, rowIndex, cellIndex, currentTurn, grid) => {
+        selectCell: (idCell, rowIndex, cellIndex, currentTurn, grid, gameState) => {
             const updatedGrid = grid.map((row, rowIndexParsing) => row.map((cell, cellIndexParsing) => {
                 if ((cell.id === idCell) && (rowIndexParsing === rowIndex) && (cellIndexParsing === cellIndex)) {
-                    return { ...cell, owner: currentTurn };
+                    const currentPlayerTokens = gameState.tokens[currentTurn];
+                    if (currentPlayerTokens >0) {
+                        gameState.tokens[currentTurn]--;
+                        return { ...cell, owner: currentTurn };
+                    } else {
+                        return cell;
+                    }
                 } else {
                     return cell;
                 }
