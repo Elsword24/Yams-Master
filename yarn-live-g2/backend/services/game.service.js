@@ -175,10 +175,13 @@ const GameService = {
                     grid: gameState.grid
                 };
 
-            }
+            },
 
             //TODO : Create scoring function
-            
+            gameScore : (gameState) => {
+                const score = gameState.score[currentTurn];
+                return score;
+            },
 
             //TODO : Create EndGame function
         }
@@ -328,9 +331,12 @@ const GameService = {
                     const currentPlayerTokens = gameState.tokens[currentTurn];
                     if (currentPlayerTokens >0) {
                         gameState.tokens[currentTurn]--;
+                        console.log("CellIndex : ", cellIndex);
+                        console.log("rowIndex : ", rowIndex);
                         return { ...cell, owner: currentTurn };
                     } else if (currentPlayerTokens === 0 ) {
                         console.log("EndGame");
+                        return cell;
                         //TODO : return fact that game ended to index
                     } else {
                         return cell;
@@ -342,6 +348,7 @@ const GameService = {
         
             return updatedGrid;
         },
+        
 
     },
 

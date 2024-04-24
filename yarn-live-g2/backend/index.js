@@ -19,6 +19,11 @@ const updateClientsViewTimers = (game) => {
   game.player2Socket.emit('game.timer', GameService.send.forPlayer.gameTimer('player:2', game.gameState));
 };
 
+// const updateClientViewScoring = (game) => {
+//   game.player1Socket.emit('game.score.view-state', GameService.send.forPlayer.gameScore('player:1',game.gameState))
+//   game.player2Socket.emit('game.score.view-state', GameService.send.forPlayer.gameScore('player:2',game.gameState))
+// }
+
 const updateClientsViewDecks = (game) => {
   setTimeout(() => {
     game.player1Socket.emit('game.deck.view-state', GameService.send.forPlayer.deckViewState('player:1', game.gameState));
@@ -219,7 +224,7 @@ io.on('connection', socket => {
 
     // Here calcul score
 
-    
+
 
     games[gameIndex].gameState.currentTurn = games[gameIndex].gameState.currentTurn === 'player:1' ? 'player:2' : 'player:1';
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
