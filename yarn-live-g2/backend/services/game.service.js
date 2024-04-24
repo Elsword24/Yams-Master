@@ -176,6 +176,11 @@ const GameService = {
                 };
 
             }
+
+            //TODO : Create scoring function
+            
+
+            //TODO : Create EndGame function
         }
     },
 
@@ -324,6 +329,9 @@ const GameService = {
                     if (currentPlayerTokens >0) {
                         gameState.tokens[currentTurn]--;
                         return { ...cell, owner: currentTurn };
+                    } else if (currentPlayerTokens === 0 ) {
+                        console.log("EndGame");
+                        //TODO : return fact that game ended to index
                     } else {
                         return cell;
                     }
@@ -333,7 +341,7 @@ const GameService = {
             }));
         
             return updatedGrid;
-        }
+        },
 
     },
 

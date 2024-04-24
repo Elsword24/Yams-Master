@@ -113,6 +113,13 @@ const createGame = (player1Socket, player2Socket) => {
 
 };
 
+const endGame=(player1Socket, player2Socket) => {
+// TODO : Comptabiliser Score
+
+  window.alert("fin de la partie")
+
+}
+
 const newPlayerInQueue = (socket) => {
 
   queue.push(socket);
@@ -211,6 +218,8 @@ io.on('connection', socket => {
     games[gameIndex].gameState.grid = GameService.grid.selectCell(data.cellId, data.rowIndex, data.cellIndex, games[gameIndex].gameState.currentTurn, games[gameIndex].gameState.grid, games[gameIndex].gameState);
 
     // Here calcul score
+
+    
 
     games[gameIndex].gameState.currentTurn = games[gameIndex].gameState.currentTurn === 'player:1' ? 'player:2' : 'player:1';
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
