@@ -22,11 +22,11 @@ const CHOICES_INIT = {
 
 const GRID_INIT = [
     [
-        { viewContent: '1', id: 'brelan1', owner: null, canBeChecked: false },
-        { viewContent: '3', id: 'brelan3', owner: null, canBeChecked: false },
-        { viewContent: 'Défi', id: 'defi', owner: null, canBeChecked: false },
-        { viewContent: '4', id: 'brelan4', owner: null, canBeChecked: false },
-        { viewContent: '6', id: 'brelan6', owner: null, canBeChecked: false },
+        { viewContent: '1', id: 'brelan1', owner: "player:1", canBeChecked: false },
+        { viewContent: '3', id: 'brelan3', owner: "player:1", canBeChecked: false },
+        { viewContent: 'Défi', id: 'defi', owner: "player:1", canBeChecked: false },
+        { viewContent: '4', id: 'brelan4', owner: "player:1", canBeChecked: false },
+        { viewContent: '6', id: 'brelan6', owner: "player:1", canBeChecked: false },
     ],
     [
         { viewContent: '2', id: 'brelan2', owner: null, canBeChecked: false },
@@ -176,14 +176,6 @@ const GameService = {
                 };
 
             },
-
-            //TODO : Create scoring function
-            gameScore : (gameState) => {
-                const score = gameState.score[currentTurn];
-                return score;
-            },
-
-            //TODO : Create EndGame function
         }
     },
 
@@ -378,12 +370,13 @@ const GameService = {
             return -1;
         },
 
-        calculateScoreAndWinner(grid) {
-            console.log("Test");
+        calculateScoreAndWinner(grid, gameState) {
             // Fonction pour vérifier si les pions sont alignés
             function checkPointsAlignment(points) {
+                console.log("points",points.length)
                 if (points.length < 3) return 0; // Pas assez de pions pour former une combinaison
                 const owner = points[0].owner;
+                console.log("owner", owner)
                 if (owner === null) return 0; // La combinaison n'appartient à aucun joueur
                 if (points.length === 5) return owner; // Une combinaison de 5 pions signifie la victoire
                 return points.length === 4 ? 2 : 1; // 2 points pour une combinaison de 4 pions, 1 point pour une combinaison de 3 pions
@@ -400,10 +393,12 @@ const GameService = {
                         for (let l = j; l <= k; l++) {
                             points.push(grid[i][l]);
                         }
-                        const alignmentResult = checkPointsAlignment(points);
+                        const alignmentResult = checkPointsAlignment(points,gameState);
                         if (alignmentResult > 0) {
                             // Ajouter des points au score du joueur et vérifier s'il y a un vainqueur
+                            console.log("current : " , gameState.currentTurn)
                             playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+                            console.log(playerScores)
                             if (alignmentResult === 5) {
                                 winner = alignmentResult; // Affecter le vainqueur si une combinaison de 5 pions est trouvée
                             }
@@ -413,62 +408,62 @@ const GameService = {
             }
         
             // Vérification des colonnes
-            for (let j = 0; j < grid[0].length; j++) {
-                for (let i = 0; i < grid.length; i++) {
-                    for (let k = i; k < Math.min(i + 5, grid.length); k++) {
-                        const points = [];
-                        for (let l = i; l <= k; l++) {
-                            points.push(grid[l][j]);
-                        }
-                        const alignmentResult = checkPointsAlignment(points);
-                        if (alignmentResult > 0) {
-                            console.log(alignmentResult);
-                            playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
-                            if (alignmentResult === 5) {
-                                winner = alignmentResult;
-                            }
-                        }
-                    }
-                }
-            }
+            // for (let j = 0; j < grid[0].length; j++) {
+            //     for (let i = 0; i < grid.length; i++) {
+            //         for (let k = i; k < Math.min(i + 5, grid.length); k++) {
+            //             const points = [];
+            //             for (let l = i; l <= k; l++) {
+            //                 points.push(grid[l][j]);
+            //             }
+            //             const alignmentResult = checkPointsAlignment(points);
+            //             if (alignmentResult > 0) {
+            //                 console.log(alignmentResult);
+            //                 playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+            //                 if (alignmentResult === 5) {
+            //                     winner = alignmentResult;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         
-            // Vérification des diagonales (de haut en bas)
-            for (let i = 0; i < grid.length; i++) {
-                for (let j = 0; j < grid[i].length; j++) {
-                    for (let k = 0; k < Math.min(grid.length - i, grid[i].length - j, 5); k++) {
-                        const points = [];
-                        for (let l = 0; l <= k; l++) {
-                            points.push(grid[i + l][j + l]);
-                        }
-                        const alignmentResult = checkPointsAlignment(points);
-                        if (alignmentResult > 0) {
-                            playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
-                            if (alignmentResult === 5) {
-                                winner = alignmentResult;
-                            }
-                        }
-                    }
-                }
-            }
+            // // Vérification des diagonales (de haut en bas)
+            // for (let i = 0; i < grid.length; i++) {
+            //     for (let j = 0; j < grid[i].length; j++) {
+            //         for (let k = 0; k < Math.min(grid.length - i, grid[i].length - j, 5); k++) {
+            //             const points = [];
+            //             for (let l = 0; l <= k; l++) {
+            //                 points.push(grid[i + l][j + l]);
+            //             }
+            //             const alignmentResult = checkPointsAlignment(points);
+            //             if (alignmentResult > 0) {
+            //                 playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+            //                 if (alignmentResult === 5) {
+            //                     winner = alignmentResult;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         
-            // Vérification des diagonales (de bas en haut)
-            for (let i = grid.length - 1; i >= 0; i--) {
-                for (let j = 0; j < grid[i].length; j++) {
-                    for (let k = 0; k < Math.min(i + 1, grid[i].length - j, 5); k++) {
-                        const points = [];
-                        for (let l = 0; l <= k; l++) {
-                            points.push(grid[i - l][j + l]);
-                        }
-                        const alignmentResult = checkPointsAlignment(points);
-                        if (alignmentResult > 0) {
-                            playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
-                            if (alignmentResult === 5) {
-                                winner = alignmentResult;
-                            }
-                        }
-                    }
-                }
-            }
+            // // Vérification des diagonales (de bas en haut)
+            // for (let i = grid.length - 1; i >= 0; i--) {
+            //     for (let j = 0; j < grid[i].length; j++) {
+            //         for (let k = 0; k < Math.min(i + 1, grid[i].length - j, 5); k++) {
+            //             const points = [];
+            //             for (let l = 0; l <= k; l++) {
+            //                 points.push(grid[i - l][j + l]);
+            //             }
+            //             const alignmentResult = checkPointsAlignment(points);
+            //             if (alignmentResult > 0) {
+            //                 playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+            //                 if (alignmentResult === 5) {
+            //                     winner = alignmentResult;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         
             return { playerScores, winner };
         }
