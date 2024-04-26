@@ -223,9 +223,9 @@ io.on('connection', socket => {
     games[gameIndex].gameState.grid = GameService.grid.selectCell(data.cellId, data.rowIndex, data.cellIndex, games[gameIndex].gameState.currentTurn, games[gameIndex].gameState.grid, games[gameIndex].gameState);
 
     // Here calcul score
-    games[gameIndex].gameState.utils = GameService.utils.calculateScoreAndWinner(games[gameIndex].gameState.grid, games[gameIndex].gameState.currentTurn, games[gameIndex].gameState);
+    games[gameIndex].gameState.utils = GameService.utils.calculateScoreAndWinner(games[gameIndex].gameState.currentTurn, games[gameIndex].gameState.grid, games[gameIndex].gameState);
 
-
+    
     games[gameIndex].gameState.currentTurn = games[gameIndex].gameState.currentTurn === 'player:1' ? 'player:2' : 'player:1';
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
 

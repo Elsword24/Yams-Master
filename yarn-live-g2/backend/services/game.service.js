@@ -338,6 +338,11 @@ const GameService = {
         
             return updatedGrid;
         },
+    
+
+    },
+
+    score:{
 
     },
 
@@ -370,13 +375,14 @@ const GameService = {
             return -1;
         },
 
-        calculateScoreAndWinner(grid, gameState) {
+        calculateScoreAndWinner(grid, currentTurn, gameState) {
             // Fonction pour vérifier si les pions sont alignés
+            console.log("current : ", gameState.currentTurn);
             function checkPointsAlignment(points) {
-                console.log("points",points.length)
+                console.log("points", points.length);
                 if (points.length < 3) return 0; // Pas assez de pions pour former une combinaison
                 const owner = points[0].owner;
-                console.log("owner", owner)
+                console.log("owner", owner);
                 if (owner === null) return 0; // La combinaison n'appartient à aucun joueur
                 if (points.length === 5) return owner; // Une combinaison de 5 pions signifie la victoire
                 return points.length === 4 ? 2 : 1; // 2 points pour une combinaison de 4 pions, 1 point pour une combinaison de 3 pions
@@ -393,12 +399,11 @@ const GameService = {
                         for (let l = j; l <= k; l++) {
                             points.push(grid[i][l]);
                         }
-                        const alignmentResult = checkPointsAlignment(points,gameState);
+                        const alignmentResult = checkPointsAlignment(points);
                         if (alignmentResult > 0) {
                             // Ajouter des points au score du joueur et vérifier s'il y a un vainqueur
-                            console.log("current : " , gameState.currentTurn)
                             playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
-                            console.log(playerScores)
+                            console.log(playerScores);
                             if (alignmentResult === 5) {
                                 winner = alignmentResult; // Affecter le vainqueur si une combinaison de 5 pions est trouvée
                             }
@@ -467,6 +472,7 @@ const GameService = {
         
             return { playerScores, winner };
         }
+        
     }
 }
 
