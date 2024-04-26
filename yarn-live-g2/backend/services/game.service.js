@@ -347,22 +347,6 @@ const GameService = {
             return updatedGrid;
         },
 
-        // getOwnerAtPosition = (grid, rowIndex, cellIndex, owner) => {
-
-        //     grid.map()
-        //     if (
-        //         grid &&
-        //         grid[rowIndex] &&
-        //         grid[rowIndex][cellIndex] &&
-        //         grid[rowIndex][cellIndex].owner
-        //     ) {
-        //         return grid[rowIndex][cellIndex].owner;
-        //     } else {
-        //         return null; // Aucun propriétaire trouvé à cette position
-        //     }
-        // };
-        
-
     },
 
     utils: {
