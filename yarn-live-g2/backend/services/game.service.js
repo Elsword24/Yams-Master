@@ -22,10 +22,10 @@ const CHOICES_INIT = {
 
 const GRID_INIT = [
     [
-        { viewContent: '1', id: 'brelan1', owner: "player:1", canBeChecked: false },
-        { viewContent: '3', id: 'brelan3', owner: "player:1", canBeChecked: false },
-        { viewContent: 'Défi', id: 'defi', owner: "player:1", canBeChecked: false },
-        { viewContent: '4', id: 'brelan4', owner: "player:1", canBeChecked: false },
+        { viewContent: '1', id: 'brelan1', owner: 'player:1', canBeChecked: false },
+        { viewContent: '3', id: 'brelan3', owner: 'player:1', canBeChecked: false },
+        { viewContent: 'Défi', id: 'defi', owner: 'player:1', canBeChecked: false },
+        { viewContent: '4', id: 'brelan4', owner: null, canBeChecked: false },
         { viewContent: '6', id: 'brelan6', owner: null, canBeChecked: false },
     ],
     [
@@ -379,35 +379,52 @@ const GameService = {
             // Fonction pour vérifier si les pions sont alignés
             console.log("current : ", gameState.currentTurn);
             function checkPointsAlignment(points) {
-                if (points.length < 3) return 0; // Pas assez de pions pour former une combinaison
-                const owner = points[0].owner;
-                if (owner === null) return 0; // La combinaison n'appartient à aucun joueur
-                if (points.length === 5) return owner; // Une combinaison de 5 pions signifie la victoire
-                return points.length === 4 ? 2 : 1; // 2 points pour une combinaison de 4 pions, 1 point pour une combinaison de 3 pions
+                console.log("owner point", points[0].owner)
+                ActualOwner = points[0].owner
+                    if (points.length === 5  && gameState.currentTurn == ActualOwner) {
+                        return gameState.currentTurn;
+                    } else if(points.length === 4  && gameState.currentTurn == ActualOwner ) {
+                        return 2;
+                    } else if (points.length === 3  && gameState.currentTurn == ActualOwner) {
+                        return 1;
+                    } 
+                // if (points.length < 3) return 0; // Pas assez de pions pour former une combinaison
+                // const owner = points[0].owner;
+                // if (owner === null) return 0; // La combinaison n'appartient à aucun joueur
+                // if (points.length === 5) return owner; // Une combinaison de 5 pions signifie la victoire
+                // return points.length === 4 ? 2 : 1; // 2 points pour une combinaison de 4 pions, 1 point pour une combinaison de 3 pions
             }
         
             let playerScores = {}; // Un objet pour stocker les scores de chaque joueur
             let winner = null; // Variable pour stocker l'ID du vainqueur
         
             // Vérification des lignes
+            console.log('New turn')
             for (let i = 0; i < grid.length; i++) {
                 for (let j = 0; j < grid[i].length; j++) {
-                    for (let k = j; k < Math.min(j + 5, grid[i].length); k++) {
+                    for (let k = j; k < 5; k++) {
                         const points = [];
                         for (let l = j; l <= k; l++) {
                             points.push(grid[i][l]);
                         }
+                        console.log('New ligne')
                         const alignmentResult = checkPointsAlignment(points);
+                        console.log("alignmentresult : ",alignmentResult)
                         if (alignmentResult > 0) {
                             if (gameState.currentTurn ==="player:1") {
                                 console.log("player 1 ", playerScores)
                                 playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+                                console.log("playerScore = ",  playerScores)
+                                gameState.player1Score += playerScores
+                                playerScores = 0;
                             } else {
                                 playerScores[alignmentResult] = (playerScores[alignmentResult] || 0) + alignmentResult;
+                                gameState.player2Score += playerScores
+                                playerScores = 0;
                             }
                             // Ajouter des points au score du joueur et vérifier s'il y a un vainqueur
 
-                            console.log(playerScores);
+                            console.log("player 1",gameState.player1Score,"player2", gameState.player2Score);
                             if (alignmentResult === 5) {
                                 winner = alignmentResult; // Affecter le vainqueur si une combinaison de 5 pions est trouvée
                             }
