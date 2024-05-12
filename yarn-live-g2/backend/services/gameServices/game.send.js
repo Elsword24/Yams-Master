@@ -17,19 +17,19 @@ const send = {
         };
       },
 
-      choicesViewState: (playerKey, gameState) => {
+      choiceViewState: (playerKey, gameState) => {
         const chociesViewState = {
-          displayChoices: true,
+          displayChoice: true,
           canMakeChoice: playerKey === gameState.currentTurn,
-          idSelectedChoice: gameState.choices.idSelectedChoice,
-          availableChoices: gameState.choices.availableChoices,
+          idSelectedChoice: gameState.choice.idSelectedChoice,
+          availableChoice: gameState.choice.availableChoice,
         };
         return chociesViewState;
       },
 
       gridViewState: (playerKey, game) => {
         const updatedGrid = grid.updateGridAfterSelectingChoice(
-          game.gameState.choices.idSelectedChoice,
+          game.gameState.choice.idSelectedChoice,
           game.gameState.grid
         );
 
@@ -37,7 +37,7 @@ const send = {
           displayGrid: true,
           canSelectCells:
             playerKey === game.gameState.currentTurn &&
-            game.gameState.choices.availableChoices.length > 0,
+            game.gameState.choice.availableChoice.length > 0,
           grid: updatedGrid,
           // use this findPlayerIdBySocketId to get the player key by socket id
           socketIdPlayer1: game.player1Socket.id,
@@ -70,14 +70,14 @@ const send = {
         };
         return deckViewState;
       },
-      choicesViewState: (playerKey, gameState) => {
-        const choicesViewState = {
-          displayChoices: true,
+      choiceViewState: (playerKey, gameState) => {
+        const choiceViewState = {
+          displayChoice: true,
           canMakeChoice: playerKey === gameState.currentTurn,
-          idSelectedChoice: gameState.choices.idSelectedChoice,
-          availableChoices: gameState.choices.availableChoices,
+          idSelectedChoice: gameState.choice.idSelectedChoice,
+          availableChoice: gameState.choice.availableChoice,
         };
-        return choicesViewState;
+        return choiceViewState;
       },
 
       playerAndOppnonentInfosState: (playerKey, gameState) => {

@@ -40,14 +40,14 @@ const updateClientsViewDecks = (game) => {
   }, 200);
 };
 
-const updateClientsViewChoices = (game) => {
+const updateClientsViewChoice = (game) => {
   game.player1Socket.emit(
-    "game.choices.view-state",
-    GameService.send.forPlayer.choicesViewState("player:1", game.gameState)
+    "game.choice.view-state",
+    GameService.send.forPlayer.choiceViewState("player:1", game.gameState)
   );
   game.player2Socket.emit(
-    "game.choices.view-state",
-    GameService.send.forPlayer.choicesViewState("player:2", game.gameState)
+    "game.choice.view-state",
+    GameService.send.forPlayer.choiceViewState("player:2", game.gameState)
   );
 };
 
@@ -130,34 +130,29 @@ const createGame = (player1Socket, player2Socket, type) => {
   updateClientsViewGrid(games[gameIndex]);
   updateClientsViewPlayersInfos(games[gameIndex]);
 
-  // timer every second
   games[gameIndex].gameInterval = setInterval(() => {
-    // timer variable decreased
+
     games[gameIndex].gameState.timer--;
 
-    // emit timer to both clients every seconds
     updateClientsViewTimers(games[gameIndex]);
 
-    // if timer is down to 0, we end turn
     if (games[gameIndex].gameState.timer === 0) {
-      // switch currentTurn variable
+
       games[gameIndex].gameState.currentTurn =
         games[gameIndex].gameState.currentTurn === "player:1"
           ? "player:2"
           : "player:1";
-      // reset timer
+
       games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
 
-      // reset deck state
       games[gameIndex].gameState.deck = GameService.init.deck();
 
-      // reset choices state
-      games[gameIndex].gameState.choices = GameService.init.choices();
+      games[gameIndex].gameState.choice = GameService.init.choice();
 
       // reset views also
       updateClientsViewTimers(games[gameIndex]);
       updateClientsViewDecks(games[gameIndex]);
-      updateClientsViewChoices(games[gameIndex]);
+      updateClientsViewChoice(games[gameIndex]);
       updateClientsViewGrid(games[gameIndex]);
     }
   }, 1000);
@@ -215,13 +210,13 @@ io.on("connection", (socket) => {
       const isDefi = false;
       const isFirstRoll = games[gameIndex].gameState.deck.rollsCounter === 1;
 
-      const combinations = GameService.choices.findCombinations(
+      const combinations = GameService.choice.findCombinations(
         dices,
         isDefi,
         isFirstRoll
       );
 
-      games[gameIndex].gameState.choices.availableChoices = combinations;
+      games[gameIndex].gameState.choice.availableChoice = combinations;
     }
     else {
       games[gameIndex].gameState.deck.dices = GameService.dices.roll(
@@ -237,13 +232,13 @@ io.on("connection", (socket) => {
       const isDefi = false;
       const isFirstRoll = games[gameIndex].gameState.deck.rollsCounter === 1;
 
-      const combinations = GameService.choices.findCombinations(
+      const combinations = GameService.choice.findCombinations(
         dices,
         isDefi,
         isFirstRoll
       );
 
-      games[gameIndex].gameState.choices.availableChoices = combinations;
+      games[gameIndex].gameState.choice.availableChoice = combinations;
 
       if (combinations.length == 0) {
         games[gameIndex].gameState.timer = 3;
@@ -251,7 +246,7 @@ io.on("connection", (socket) => {
     }
    setTimeout(() => {
       updateClientsViewDecks(games[gameIndex]);
-      updateClientsViewChoices(games[gameIndex]);
+      updateClientsViewChoice(games[gameIndex]);
     }, 0);
   });
 
@@ -271,15 +266,15 @@ io.on("connection", (socket) => {
     updateClientsViewDecks(games[gameIndex]);
   });
 
-  socket.on("game.choices.selected", (data) => {
+  socket.on("game.choice.selected", (data) => {
     const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
     );
 
-    games[gameIndex].gameState.choices.idSelectedChoice = data.choiceId;
+    games[gameIndex].gameState.choice.idSelectedChoice = data.choiceId;
 
-    updateClientsViewChoices(games[gameIndex]);
+    updateClientsViewChoice(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);
   });
 
@@ -342,7 +337,7 @@ io.on("connection", (socket) => {
         }
     }
     games[gameIndex].gameState.deck = GameService.init.deck();
-    games[gameIndex].gameState.choices = GameService.init.choices();
+    games[gameIndex].gameState.choice = GameService.init.choice();
     games[gameIndex].player1Socket.emit(
       "game.timer",
       GameService.send.forPlayer.gameTimer(
@@ -359,7 +354,7 @@ io.on("connection", (socket) => {
     );
     console.log(games[gameIndex].gameState.Player)
     updateClientsViewDecks(games[gameIndex]);
-    updateClientsViewChoices(games[gameIndex]);
+    updateClientsViewChoice(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);
     updateClientsViewPlayersInfos(games[gameIndex]);
   });

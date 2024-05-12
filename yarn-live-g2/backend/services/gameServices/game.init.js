@@ -21,15 +21,15 @@ const GAME_INIT = {
     player1Tokens: MAX_TOKENS,
     player2Tokens: MAX_TOKENS,
     grid: [],
-    choices: {},
+    choice: {},
     deck: {},
   },
 };
-const CHOICES_INIT = {
+const CHOICE_INIT = {
   isDefi: false,
   isSec: false,
   idSelectedChoice: null,
-  availableChoices: [],
+  availableChoice: [],
 };
 const ALL_COMBINATIONS = [
     { value: "Brelan 1", id: "brelan1" },
@@ -89,12 +89,12 @@ const init = {
     const game = { ...GAME_INIT };
     game["gameState"]["timer"] = TURN_DURATION;
     game["gameState"]["deck"] = { ...DECK_INIT };
-    game["gameState"]["choices"] = { ...CHOICES_INIT };
+    game["gameState"]["choice"] = { ...CHOICE_INIT };
     game["gameState"]["grid"] = [...GRID_INIT];
     return game;
   },
   deck: () => ({ ...DECK_INIT }),
-  choices: () => ({ ...CHOICES_INIT }),
+  choice: () => ({ ...CHOICE_INIT }),
   grid: () => [...GRID_INIT],
   allCombinations: () => [...ALL_COMBINATIONS],
   MINIMUM_ALIGNED_TOKENS: () => MINIMUM_ALIGNED_TOKENS,

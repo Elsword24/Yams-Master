@@ -7,18 +7,18 @@ const Choices = () => {
     
     const socket = useContext(SocketContext);
 
-    const [displayChoices, setDisplayChoices] = useState(false);
+    const [displayChoice, setDisplayChoice] = useState(false);
     const [canMakeChoice, setCanMakeChoice] = useState(false);
     const [idSelectedChoice, setIdSelectedChoice] = useState(null);
-    const [availableChoices, setAvailableChoices] = useState([]);
+    const [availableChoice, setAvailableChoice] = useState([]);
 
     useEffect(() => {
 
-        socket.on("game.choices.view-state", (data) => {
-            setDisplayChoices(data['displayChoices']);
+        socket.on("game.choice.view-state", (data) => {
+            setDisplayChoice(data['displayChoice']);
             setCanMakeChoice(data['canMakeChoice']);
             setIdSelectedChoice(data['idSelectedChoice']);
-            setAvailableChoices(data['availableChoices']);
+            setAvailableChoice(data['availableChoice']);
         });
 
     }, []);
@@ -27,15 +27,15 @@ const Choices = () => {
 
         if (canMakeChoice) {
             setIdSelectedChoice(choiceId);
-            socket.emit("game.choices.selected", { choiceId });
+            socket.emit("game.choice.selected", { choiceId });
         }
         
     };
 
     return (
         <View style={styles.choicesContainer}>
-            {displayChoices &&
-                availableChoices.map((choice) => (
+            {displayChoice &&
+                availableChoice.map((choice) => (
                     <TouchableOpacity
                         key={choice.id}
                         style={[

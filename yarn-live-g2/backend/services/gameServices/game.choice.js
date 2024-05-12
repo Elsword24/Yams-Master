@@ -1,10 +1,10 @@
 const init = require('./game.init');
 
-const choices = {
+const choice = {
     findCombinations: (dices, isDefi, isFirstRoll) => {
       const allCombinations = init.allCombinations();
       const availableCombinations = [];
-      const counts = Array(7).fill(0); // Counts for dice values from 1 to 6
+      const counts = Array(7).fill(0); 
       let sum = 0;
 
       dices.forEach((dice) => {
@@ -87,4 +87,4 @@ const choices = {
     },
 }
 
-module.exports = choices;
+module.exports = choice;

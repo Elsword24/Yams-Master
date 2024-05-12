@@ -2,7 +2,7 @@ const init = require("./gameServices/game.init");
 const timer = require("./gameServices/game.timer");
 const dices = require("./gameServices/game.dice");
 const send = require("./gameServices/game.send");
-const choices = require("./gameServices/game.choice");
+const choice = require("./gameServices/game.choice");
 const grid = require("./gameServices/game.grid");
 const tokens = require("./gameServices/game.token");
 const score = require("./gameServices/game.score");
@@ -14,7 +14,7 @@ const GameService = {
   timer,
   dices,
   send,
-  choices,
+  choice,
   grid,
   tokens,
   score,
