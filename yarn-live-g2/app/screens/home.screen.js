@@ -1,20 +1,24 @@
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text} from "react-native";
 
 export default function HomeScreen({ navigation }) {
 
   return (
     <View style={[styles.container, styles.background]}>
-      <View>
-        <Button
-          title="Jouer en ligne"
-          onPress={() => navigation.navigate('OnlineGameScreen')}
-        />
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('OnlineGameScreen')}
+      >
+        <Text style={styles.buttonText}>Jouer en ligne</Text>
+      </TouchableOpacity>
       </View>
-      <View>
-        <Button
-          title="Jouer contre le bot"
-          onPress={() => navigation.navigate('VsBotGameScreen')}
-        />
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('VsBotGameScreen')}
+      >
+        <Text style={styles.buttonText}>Jouer contre le bot</Text>
+      </TouchableOpacity>
       </View>
     </View>
   );
@@ -29,5 +33,20 @@ const styles = StyleSheet.create({
   },
   background: {
     backgroundColor: "#0f0c29", // Couleur de fond
+  },
+  buttonContainer: {
+    marginBottom: 20, // Ajoute de l'écart entre les boutons
+  },
+  button: {
+    backgroundColor: "#000000",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "center",
   }
 });

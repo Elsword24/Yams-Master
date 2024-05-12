@@ -322,7 +322,7 @@ io.on("connection", (socket) => {
       );
       clearInterval(games[gameIndex].gameInterval);
       games.splice(gameIndex, 1);
-      return;
+      
       }
     games[gameIndex].gameState.deck = GameService.init.deck();
     games[gameIndex].gameState.choices = GameService.init.choices();
