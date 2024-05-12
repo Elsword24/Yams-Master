@@ -6,7 +6,6 @@ const end = {
       let horizontalWinner = end.CheckEndHorizontal(gameState.grid);
       let verticalWinner = end.checkEndVertical(gameState.grid);
       let diagonalWinner = end.checkEndDiagonal(gameState.grid);
-      // to check if the victory type is alignment, one of the three checks must return a winner different than null
       let endType = null;
       if ((horizontalWinner != null) || (verticalWinner != null) || (diagonalWinner != null)) {
         endType = "alignment";
@@ -32,7 +31,7 @@ const end = {
         loserUsedTokens = init.MAX_TOKENS() - gameState[`player${loser}Tokens`];
         winnerScore = gameState[`player${winner}Score`];
         loserScore = gameState[`player${loser}Score`];
-        if (victoryType === "alignment") {
+        if (endType === "alignment") {
           winnerScore = null;
           loserScore = null;
         }
@@ -45,7 +44,7 @@ const end = {
           loserUsedTokens,
           winnerScore,
           loserScore,
-          victoryType,
+          endType,
         };
         return gameResult;
       }else{
@@ -58,7 +57,7 @@ const end = {
           loserUsedTokens: null,
           winnerScore: null,
           loserScore: null,
-          victoryType: null,
+          endType: null,
         };
         return gameResult;
       }
