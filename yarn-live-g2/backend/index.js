@@ -311,14 +311,14 @@ io.on("connection", (socket) => {
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
     const VictoryResult = GameService.end.checkEnd(games[gameIndex].gameState);
     if (VictoryResult.winner != null) {
-      console.log("VictoryResult: ", VictoryResult);
       games[gameIndex].player1Socket.emit(
-        "game.game-over",
-        GameService.send.forPlayer.victoryState(VictoryResult)
+        "game.over",
+        console.log(VictoryResult.winner),
+        GameService.send.forPlayer.victoryState(VictoryResult.winner)
       );
       games[gameIndex].player2Socket.emit(
-        "game.game-over",
-        GameService.send.forPlayer.victoryState(VictoryResult)
+        "game.over",
+        GameService.send.forPlayer.victoryState(VictoryResult.winner)
       );
       }
     games[gameIndex].gameState.deck = GameService.init.deck();

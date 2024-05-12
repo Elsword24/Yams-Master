@@ -13,11 +13,9 @@ const end = {
       let winner;
       if (endType === "alignment") {
         winner = horizontalWinner || verticalWinner || diagonalWinner;
-        console.log("The winner is: ", winner);
       }
       const playersHaveRemainingTokens = tokens.checkAvailablePlayerTokens(gameState);
       if (!playersHaveRemainingTokens) {
-        console.log("The game is over, no more tokens available");
         endType = "score";
         let scoreWinner = end.checkScores(gameState);
         winner = scoreWinner;
@@ -66,14 +64,11 @@ const end = {
       let winner = null;
       if (player1Score > player2Score) {
         winner = "player:1";
-        console.log("The winner is player 1");
         window.alert(test)
       } else if (player1Score < player2Score) {
         winner = "player:2";
-        console.log("The winner is player 2");
       } else {
         winner = "draw";
-        console.log("It's a draw");
       }
       return winner;
     },
@@ -88,13 +83,11 @@ const end = {
       );
       
       if (isPlayer1Winner) {
-        console.log("(Horizontal) player 1 is the winner");
         winner = "player:1";
         return winner;
       }
 
       if (isPlayer2Winner) {
-        console.log("(Horizontal) player 2 is the winner");
         winner = "player:2";
         return winner;
       }
@@ -110,13 +103,11 @@ const end = {
         .some(Boolean);
 
       if (isPlayer1Winner) {
-        console.log("(Vertical) player 1 is the winner");
         winner = "player:1";
         return winner;
       }
 
       if (isPlayer2Winner) {
-        console.log("(Vertical) player 2 is the winner");
         winner = "player:2";
       }
     },
@@ -131,13 +122,11 @@ const end = {
         .every((cell) => cell.owner === "player:2");
 
       if (isPlayer1WinnerFirstDiagonal) {
-        console.log("(Diagonal) player 1 is the winner");
         winner = "player:1";
         return winner;
       }
 
       if (isPlayer2WinnerFirstDiagonal) {
-        console.log("(Diagonal) player 2 is the winner");
         winner = "player:2";
         return winner;
       }
@@ -151,13 +140,11 @@ const end = {
         .every((cell) => cell.owner === "player:2");
 
       if (isPlayer1WinnerSecondDiagonal) {
-        console.log("player 1 is the winner");
         winner = "player:1";
         return winner;
       }
 
       if (isPlayer2WinnerSecondDiagonal) {
-        console.log("player 2 is the winner");
         winner = "player:2";
         return winner;
       }

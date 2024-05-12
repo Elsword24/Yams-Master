@@ -28,6 +28,11 @@ export default function OnlineGameController() {
             setIdOpponent(data['idOpponent']);
         });
 
+        socket.on('game.over',(data) => {
+            console.log("winner :",data)
+            alert("Winner is :", data)
+        })
+
     }, []);
 
     return (
