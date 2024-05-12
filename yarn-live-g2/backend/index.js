@@ -323,7 +323,7 @@ io.on("connection", (socket) => {
         ? "player:2"
         : "player:1";
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
-    const VictoryResult = GameService.victory.checkVictory(games[gameIndex].gameState);
+    const VictoryResult = GameService.end.checkEnd(games[gameIndex].gameState);
     if (VictoryResult.winner != null) {
       console.log("VictoryResult: ", VictoryResult);
       games[gameIndex].player1Socket.emit(

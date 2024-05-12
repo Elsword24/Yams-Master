@@ -3,34 +3,29 @@ const tokens = require("./game.token");
 
 const end = {
     checkEnd: (gameState) => {
-      let horizontalWinner = victory.CheckEndHorizontal(gameState.grid);
-      let verticalWinner = victory.checkEndVertical(gameState.grid);
-      let diagonalWinner = victory.CheclEndDiagonal(gameState.grid);
+      let horizontalWinner = end.CheckEndHorizontal(gameState.grid);
+      let verticalWinner = end.checkEndVertical(gameState.grid);
+      let diagonalWinner = end.checkEndDiagonal(gameState.grid);
       // to check if the victory type is alignment, one of the three checks must return a winner different than null
-      let victoryType = null;
+      let endType = null;
       if ((horizontalWinner != null) || (verticalWinner != null) || (diagonalWinner != null)) {
-        victoryType = "alignment";
+        endType = "alignment";
       }
       let winner;
-      if (victoryType === "alignment") {
+      if (endType === "alignment") {
         winner = horizontalWinner || verticalWinner || diagonalWinner;
         console.log("The winner is: ", winner);
       }
       const playersHaveRemainingTokens = tokens.checkAvailablePlayerTokens(gameState);
       if (!playersHaveRemainingTokens) {
         console.log("The game is over, no more tokens available");
-        victoryType = "score";
-        let scoreWinner = victory.checkScores(gameState);
+        endType = "score";
+        let scoreWinner = end.checkScores(gameState);
         winner = scoreWinner;
       }
 
       if (winner != null) {
         winner = winner.split(":")[1];
-        gameState.gameEndTime = Date.now();
-        gameDurationTimestamp = gameState.gameEndTime - gameState.gameStartTime;
-        // now format it like this: 00:00:00, remove hours part if less than 1 hour
-        gameDuration = new Date(gameDurationTimestamp).toISOString().substr(11, 8);
-        console.log("Game duration (in victory.js): ", gameDuration);
         loser = winner === "1" ? "2" : "1";
         gameType = gameState.gameType;
         winnerUsedTokens = init.MAX_TOKENS() - gameState[`player${winner}Tokens`];
@@ -84,7 +79,7 @@ const end = {
       }
       return winner;
     },
-    checkVictoryHorizontal: (grid) => {
+    CheckEndHorizontal: (grid) => {
       let winner = null;
       const isPlayer1Winner = grid.some((row) =>
         row.every((cell) => cell.owner === "player:1")
@@ -106,7 +101,7 @@ const end = {
         return winner;
       }
     },
-    checkVictoryVertical: (grid) => {
+    checkEndVertical: (grid) => {
       let winner = null;
       const isPlayer1Winner = grid[0]
         .map((_, col) => grid.every((row) => row[col].owner === "player:1"))
@@ -127,7 +122,7 @@ const end = {
         winner = "player:2";
       }
     },
-    checkVictoryDiagonal: (grid) => {
+    checkEndDiagonal: (grid) => {
       let winner = null;
       // Check for diagonal from top left to bottom right
       const isPlayer1WinnerFirstDiagonal = grid
