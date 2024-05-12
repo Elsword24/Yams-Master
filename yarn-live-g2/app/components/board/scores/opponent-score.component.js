@@ -7,7 +7,7 @@ const OpponentScore = () => {
   const [opponentScore, setOpponentScore] = useState(0);
 
   useEffect(() => {
-    socket.on("game.score.view-state", (data) => {
+    socket.on("game.score.view", (data) => {
       setOpponentScore(data.opponentScore);
     });
   }, []);

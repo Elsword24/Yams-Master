@@ -7,7 +7,8 @@ const PlayerScore = () => {
   const [playerScore, setPlayerScore] = useState(0);
 
   useEffect(() => {
-    socket.on("game.score.view-state", (data) => {
+    socket.on("game.score.view", (data) => {
+      console.log(data.PlayerScore)
       setPlayerScore(data.playerScore);
     });
   }, []);

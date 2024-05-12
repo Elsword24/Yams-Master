@@ -3,6 +3,7 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 var uniqid = require("uniqid");
 const GameService = require("./services/game.services");
+const { gameState } = require("./services/gameServices/game.init");
 
 // ---------------------------------------------------
 // -------- CONSTANTS AND GLOBAL VARIABLES -----------
@@ -66,14 +67,14 @@ const updateClientsViewGrid = (game) => {
 const updateClientsViewPlayersInfos = (game) => {
   setTimeout(() => {
     game.player1Socket.emit(
-      "game.players-infos.view-state",
+      "game.score.view",
       GameService.send.forPlayer.playerAndOppnonentInfosState(
         "player:1",
         game.gameState
       )
     );
     game.player2Socket.emit(
-      "game.players-infos.view-state",
+      "game.score.view",
       GameService.send.forPlayer.playerAndOppnonentInfosState(
         "player:2",
         game.gameState
@@ -356,7 +357,7 @@ io.on("connection", (socket) => {
         games[gameIndex].gameState
       )
     );
-
+    console.log(games[gameIndex].gameState.Player)
     updateClientsViewDecks(games[gameIndex]);
     updateClientsViewChoices(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);
