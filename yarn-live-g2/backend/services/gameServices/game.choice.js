@@ -12,42 +12,19 @@ const choice = {
         counts[value]++;
         sum += value;
       });
-
-      // -------------------------------- //
-      // (1) Brelan
-      // -------------------------------- //
       const hasThreeOfAKind = counts.some((count) => count === 3);
 
-      // -------------------------------- //
-      // Full
-      // -------------------------------- //
       const hasPair = counts.some((count) => count === 2);
 
-      // -------------------------------- //
-      // (3) Carré
-      // -------------------------------- //
       const hasFourOfAKind = counts.some((count) => count >= 4);
 
-      // -------------------------------- //
-      // (4) Yam
-      // -------------------------------- //
       const yam = counts.some((count) => count === 5);
 
-      // -------------------------------- //
-      // (5) Suite
-      // -------------------------------- //
       const hasStraight =
         counts.slice(1, 6).every((count) => count >= 1) ||
-        counts.slice(2, 7).every((count) => count >= 1); // Check for sequences 1-2-3-4-5 or 2-3-4-5-6
+        counts.slice(2, 7).every((count) => count >= 1); 
 
-      // -------------------------------- //
-      // (6) ≤8
-      // -------------------------------- //
       const isLessThanEqual8 = sum <= 8;
-
-      // -------------------------------- //
-      // (7) Full
-      // -------------------------------- //
       let full = false;
       if (hasThreeOfAKind && hasPair) {
         const threeOfAKindValue = counts.findIndex((count) => count === 3);
@@ -55,7 +32,6 @@ const choice = {
         full = threeOfAKindValue !== pairValue;
       }
 
-      // Determine available combinations based on the current state of the dices
       allCombinations.forEach((combination) => {
         if (
           (combination.id.startsWith("brelan") &&
@@ -71,9 +47,6 @@ const choice = {
         }
       });
 
-      // -------------------------------- //
-      // (8) Sec
-      // -------------------------------- //
       if (isFirstRoll) {
         const nonBrelanCombinations = availableCombinations.filter(
           (combination) => !combination.id.startsWith("brelan")
