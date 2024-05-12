@@ -54,7 +54,7 @@ const updateClientsViewGrid = (game) => {
   setTimeout(() => {
     game.player1Socket.emit(
       "game.grid.view-state",
-      GameService.send.forPlayer.gridViewState("player:1", game)
+      GameService.send.forPlayer.gridViewState("player:1", game, GameService.grid)
     );
     game.player2Socket.emit(
       "game.grid.view-state",
