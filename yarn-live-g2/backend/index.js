@@ -222,9 +222,11 @@ io.on('connection', socket => {
     games[gameIndex].gameState.grid = GameService.grid.resetcanBeCheckedCells(games[gameIndex].gameState.grid);
     games[gameIndex].gameState.grid = GameService.grid.selectCell(data.cellId, data.rowIndex, data.cellIndex, games[gameIndex].gameState.currentTurn, games[gameIndex].gameState.grid, games[gameIndex].gameState);
 
-    // Here calcul score
-    // games[gameIndex].gameState.utils = GameService.utils.calculateScoreAndWinner( games[gameIndex].gameState.grid,games[gameIndex].gameState.currentTurn, games[gameIndex].gameState);
-
+    GameService.score.detectAlignmentTypeAndScore(
+      games[gameIndex].gameState.score,
+      data.rowIndex,
+      data.cellIndex
+    ); 
     
     games[gameIndex].gameState.currentTurn = games[gameIndex].gameState.currentTurn === 'player:1' ? 'player:2' : 'player:1';
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
@@ -235,17 +237,12 @@ io.on('connection', socket => {
     games[gameIndex].player1Socket.emit('game.timer', GameService.send.forPlayer.gameTimer('player:1', games[gameIndex].gameState));
     games[gameIndex].player2Socket.emit('game.timer', GameService.send.forPlayer.gameTimer('player:2', games[gameIndex].gameState));
 
-    GameService.score.detectAlignmentTypeAndScore(
-      games[gameIndex].gameState,
-      data.rowIndex,
-      data.cellIndex
-    ); 
 
     updateClientsViewDecks(games[gameIndex]);
     updateClientsViewChoices(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);
   });
-  
+
   socket.on('disconnect', reason => {
     console.log(`[${socket.id}] socket disconnected - ${reason}`);
   });
