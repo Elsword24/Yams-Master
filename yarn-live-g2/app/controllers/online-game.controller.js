@@ -28,9 +28,22 @@ export default function OnlineGameController() {
             setIdOpponent(data['idOpponent']);
         });
 
-        socket.on('game.over',(data) => {
-            console.log("winner :",data)
-            alert("Winner is :", data)
+        socket.on('game.over.p1',(data) => {
+            alert("Winner is : player 1")
+            setTimeout(5000);
+            window.location(origin)
+        });
+
+        socket.on('game.over.p2',(data) => {
+            alert("Winner is : player 2")
+            setTimeout(5000);
+            window.location(origin)
+        });
+
+        socket.on('game.over.draw',(data) => {
+            alert("There is no winner.");
+            setTimeout(5000);
+            window.location(origin)
         })
 
     }, []);

@@ -311,16 +311,35 @@ io.on("connection", (socket) => {
     games[gameIndex].gameState.timer = GameService.timer.getTurnDuration();
     const VictoryResult = GameService.end.checkEnd(games[gameIndex].gameState);
     if (VictoryResult.winner != null) {
-      games[gameIndex].player1Socket.emit(
-        "game.over",
-        console.log(VictoryResult.winner),
-        GameService.send.forPlayer.victoryState(VictoryResult.winner)
-      );
-      games[gameIndex].player2Socket.emit(
-        "game.over",
-        GameService.send.forPlayer.victoryState(VictoryResult.winner)
-      );
-      }
+      if (VictoryResult.winner === "1") {
+        games[gameIndex].player1Socket.emit(
+          "game.over.p1",
+          GameService.send.forPlayer.victoryState(VictoryResult.winner)
+        );
+        games[gameIndex].player2Socket.emit(
+          "game.over.p1",
+          GameService.send.forPlayer.victoryState(VictoryResult.winner)
+        );
+        } else if (VictoryResult.winner === "2") {
+          games[gameIndex].player1Socket.emit(
+            "game.over.p2",
+            GameService.send.forPlayer.victoryState(VictoryResult.winner)
+          );
+          games[gameIndex].player2Socket.emit(
+            "game.over.p2",
+            GameService.send.forPlayer.victoryState(VictoryResult.winner)
+          );
+        } else {
+          games[gameIndex].player1Socket.emit(
+            "game.over.draw",
+            GameService.send.forPlayer.victoryState(VictoryResult.winner)
+          );
+          games[gameIndex].player2Socket.emit(
+            "game.over.draw",
+            GameService.send.forPlayer.victoryState(VictoryResult.winner)
+          );
+        }
+    }
     games[gameIndex].gameState.deck = GameService.init.deck();
     games[gameIndex].gameState.choices = GameService.init.choices();
     games[gameIndex].player1Socket.emit(
