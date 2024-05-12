@@ -55,9 +55,9 @@ const GRID_INIT = [
       { viewContent: "6", id: "brelan6", owner: null, canBeChecked: false },
     ],
     [
-      { viewContent: "2", id: "brelan2", owner:'player:1' , canBeChecked: false },
-      { viewContent: "Carré", id: "carre", owner:'player:1' , canBeChecked: false },
-      { viewContent: "Sec", id: "sec", owner: 'player:1', canBeChecked: false },
+      { viewContent: "2", id: "brelan2", owner:null , canBeChecked: false },
+      { viewContent: "Carré", id: "carre", owner:null , canBeChecked: false },
+      { viewContent: "Sec", id: "sec", owner: null, canBeChecked: false },
       { viewContent: "Full", id: "full", owner:null, canBeChecked: false },
       { viewContent: "5", id: "brelan5", owner: null, canBeChecked: false },
     ],
@@ -93,12 +93,20 @@ const init = {
     game["gameState"]["grid"] = [...GRID_INIT];
     return game;
   },
-  deck: () => ({ ...DECK_INIT }),
-  choice: () => ({ ...CHOICE_INIT }),
-  grid: () => [...GRID_INIT],
-  allCombinations: () => [...ALL_COMBINATIONS],
-  MINIMUM_ALIGNED_TOKENS: () => MINIMUM_ALIGNED_TOKENS,
-  MAX_TOKENS: () => MAX_TOKENS,
+  deck: () => (
+    { ...DECK_INIT }
+  ),
+  choice: () => (
+    { ...CHOICE_INIT }
+  ),
+  grid: () => 
+    [...GRID_INIT],
+  allCombinations: () =>
+     [...ALL_COMBINATIONS],
+  MINIMUM_ALIGNED_TOKENS: () => 
+    MINIMUM_ALIGNED_TOKENS,
+  MAX_TOKENS: () => 
+    MAX_TOKENS,
 };
 
 module.exports = init;
