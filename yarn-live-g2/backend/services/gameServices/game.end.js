@@ -37,7 +37,6 @@ const end = {
         }
         const gameResult = {
           gameType,
-          gameDuration,
           winner,
           loser,
           winnerUsedTokens,
@@ -50,7 +49,6 @@ const end = {
       }else{
         const gameResult = {
           gameType: null,
-          gameDuration: null,
           winner: null,
           loser: null,
           winnerUsedTokens: null,

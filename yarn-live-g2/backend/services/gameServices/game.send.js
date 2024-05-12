@@ -108,7 +108,6 @@ const send = {
 
       victoryState: (gameResult) => {
         const gameInfos = {
-          gameDuration: gameResult.gameDuration,
           winner: gameResult.winner,
           loser: gameResult.loser,
           gameType: gameResult.gameType,

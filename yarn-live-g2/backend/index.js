@@ -201,12 +201,10 @@ io.on("connection", (socket) => {
       games,
       socket.id
     );
-    // If not last throw : rollsCounter(1,2,3) <= rollsMaximum(3)
     if (
       games[gameIndex].gameState.deck.rollsCounter <=
       games[gameIndex].gameState.deck.rollsMaximum -1
     ) {
-      // Dices management
       games[gameIndex].gameState.deck.dices = GameService.dices.roll(
         games[gameIndex].gameState.deck.dices
       );
@@ -224,9 +222,7 @@ io.on("connection", (socket) => {
 
       games[gameIndex].gameState.choices.availableChoices = combinations;
     }
-    // If last throw
     else {
-      // Dices management
       games[gameIndex].gameState.deck.dices = GameService.dices.roll(
         games[gameIndex].gameState.deck.dices
       );
@@ -252,9 +248,7 @@ io.on("connection", (socket) => {
         games[gameIndex].gameState.timer = 3;
       }
     }
-
-    // Dice Animation
-    setTimeout(() => {
+   setTimeout(() => {
       updateClientsViewDecks(games[gameIndex]);
       updateClientsViewChoices(games[gameIndex]);
     }, 0);
@@ -277,7 +271,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("game.choices.selected", (data) => {
-    // gestion des choix
     const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
@@ -295,8 +288,6 @@ io.on("connection", (socket) => {
       socket.id
     );
 
-    // La sélection d'une cellule signifie la fin du tour (ou plus tard le check des conditions de victoires)
-    // On reset l'état des cases qui étaient précédemment clicables.
     games[gameIndex].gameState.grid = GameService.grid.resetcanBeCheckedCells(
       games[gameIndex].gameState.grid
     );
@@ -308,16 +299,11 @@ io.on("connection", (socket) => {
       games[gameIndex].gameState.currentTurn,
       games[gameIndex].gameState.grid
     );
-
-    // TODO: Ici calculer le score
-    // TODO: Puis check si la partie s'arrête (lines / diagolales / no-more-gametokens)
     GameService.score.detectAlignmentTypeAndScore(
       games[gameIndex].gameState,
       data.rowIndex,
       data.cellIndex
-    ); // i'm coding this function
-
-    // Sinon on finit le tour
+    ); 
     games[gameIndex].gameState.currentTurn =
       games[gameIndex].gameState.currentTurn === "player:1"
         ? "player:2"
@@ -334,17 +320,12 @@ io.on("connection", (socket) => {
         "game.game-over",
         GameService.send.forPlayer.victoryState(VictoryResult)
       );
-      // clearInterval(games[gameIndex].gameInterval);
-      // games.splice(gameIndex, 1);
-      // return;
-      // fin de la partie
-      // on stoppe tout
-    }
-    // On remet le deck et les choix à zéro (la grille, elle, ne change pas)
+      clearInterval(games[gameIndex].gameInterval);
+      games.splice(gameIndex, 1);
+      return;
+      }
     games[gameIndex].gameState.deck = GameService.init.deck();
     games[gameIndex].gameState.choices = GameService.init.choices();
-
-    // On reset le timer
     games[gameIndex].player1Socket.emit(
       "game.timer",
       GameService.send.forPlayer.gameTimer(
@@ -360,7 +341,6 @@ io.on("connection", (socket) => {
       )
     );
 
-    // et on remet à jour la vue
     updateClientsViewDecks(games[gameIndex]);
     updateClientsViewChoices(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);

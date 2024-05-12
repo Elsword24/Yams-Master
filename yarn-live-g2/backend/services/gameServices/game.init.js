@@ -50,7 +50,7 @@ const GRID_INIT = [
     [
       { viewContent: "1", id: "brelan1", owner: null, canBeChecked: false },
       { viewContent: "3", id: "brelan3", owner: null, canBeChecked: false },
-      { viewContent: "Défi", id: "defi", owner: null, canBeChecked: false },
+      { viewContent: "Défi", id: "defi", owner: 'player:1', canBeChecked: false },
       { viewContent: "4", id: "brelan4", owner: null, canBeChecked: false },
       { viewContent: "6", id: "brelan6", owner: null, canBeChecked: false },
     ],
@@ -62,11 +62,11 @@ const GRID_INIT = [
       { viewContent: "5", id: "brelan5", owner: null, canBeChecked: false },
     ],
     [
-      { viewContent: "≤8", id: "moinshuit", owner: null, canBeChecked: false },
-      { viewContent: "Full", id: "full", owner: null, canBeChecked: false },
-      { viewContent: "Yam", id: "yam", owner: null, canBeChecked: false },
-      { viewContent: "Défi", id: "defi", owner: null, canBeChecked: false },
-      { viewContent: "Suite", id: "suite", owner: null, canBeChecked: false },
+      { viewContent: "≤8", id: "moinshuit", owner: 'player:1', canBeChecked: false },
+      { viewContent: "Full", id: "full", owner: 'player:1', canBeChecked: false },
+      { viewContent: "Yam", id: "yam", owner: 'player:1', canBeChecked: false },
+      { viewContent: "Défi", id: "defi", owner: 'player:1', canBeChecked: false },
+      { viewContent: "Suite", id: "suite", owner: 'player:1', canBeChecked: false },
     ],
     [
       { viewContent: "6", id: "brelan6", owner: null, canBeChecked: false },
