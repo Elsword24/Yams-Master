@@ -1,4 +1,4 @@
-const init = require('./init');
+const init = require('./game.init');
 
 const choices = {
     findCombinations: (dices, isDefi, isFirstRoll) => {
@@ -7,7 +7,6 @@ const choices = {
       const counts = Array(7).fill(0); // Counts for dice values from 1 to 6
       let sum = 0;
 
-      // Count dice values and calculate the total sum
       dices.forEach((dice) => {
         const value = parseInt(dice.value);
         counts[value]++;
@@ -20,7 +19,7 @@ const choices = {
       const hasThreeOfAKind = counts.some((count) => count === 3);
 
       // -------------------------------- //
-      // (2) Pairs (Not used in the game but in full)
+      // Full
       // -------------------------------- //
       const hasPair = counts.some((count) => count === 2);
 
@@ -85,21 +84,6 @@ const choices = {
       }
 
       return availableCombinations;
-    },
-
-    filterChoicesEnabler: (grid, combinations) => {
-      combinations.map((combination) => {
-        // Check if any row has at least one cell that can use this combination
-        const isCombinationUsable = grid.some((row, rowIndex) => {
-          return row.some((cell) => {
-            return cell.id === combination.id && cell.owner === null;
-          });
-        });
-
-        // Set the combination enabled property based on the result
-        combination.enabled = isCombinationUsable;
-      });
-      return combinations;
     },
 }
 

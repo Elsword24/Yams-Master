@@ -1,5 +1,5 @@
-const init = require("./init");
-const tokens = require("./tokens");
+const init = require("./game.init");
+const tokens = require("./game.token");
 
 const end = {
     checkEnd: (gameState) => {

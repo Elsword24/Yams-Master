@@ -1,8 +1,7 @@
-const grid = require("./grid");
+const grid = require("./game.grid");
 
 const send = {
     forPlayer: {
-      // Return conditionnaly gameState custom objet for player views
       gameViewState: (playerKey, game) => {
         return {
           inQueue: false,
@@ -29,7 +28,6 @@ const send = {
       },
 
       gridViewState: (playerKey, game) => {
-        // set canBeChecked to true to cells that has owner to null and the id matches the selected choice
         const updatedGrid = grid.updateGridAfterSelectingChoice(
           game.gameState.choices.idSelectedChoice,
           game.gameState.grid
@@ -83,7 +81,6 @@ const send = {
       },
 
       playerAndOppnonentInfosState: (playerKey, gameState) => {
-        // i want to return the player and opponent infos about score and remaining tokens
         const playerInfos = {
           score:
             playerKey === "player:1"
@@ -110,8 +107,6 @@ const send = {
       },
 
       victoryState: (gameResult) => {
-        console.log("gameResult", gameResult);
-        // return a json object "gameInfos" with all the inside infos of GameResult
         const gameInfos = {
           gameDuration: gameResult.gameDuration,
           winner: gameResult.winner,

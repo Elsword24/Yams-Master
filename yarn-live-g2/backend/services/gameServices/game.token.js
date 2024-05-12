@@ -1,4 +1,4 @@
-const init = require('./init');
+const init = require('./game.init');
 
 const token = {
     checkAvailablePlayerTokens: (gameState) => {

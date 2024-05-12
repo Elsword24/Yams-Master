@@ -1,5 +1,5 @@
-const victory = require("./victory");
-const init = require("./init");
+const end = require("./game.end");
+const init = require("./game.init");
 
 const score = {
     calculateScoreHorizontal: (gameState) => {
