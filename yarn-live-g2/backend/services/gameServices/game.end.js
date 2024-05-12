@@ -3,16 +3,16 @@ const tokens = require("./game.token");
 
 const end = {
     checkEnd: (gameState) => {
-      let horizontalWinner = end.CheckEndHorizontal(gameState.grid);
-      let verticalWinner = end.checkEndVertical(gameState.grid);
-      let diagonalWinner = end.checkEndDiagonal(gameState.grid);
+      let hWinner = end.CheckEndHorizontal(gameState.grid);
+      let vWinner = end.checkEndVertical(gameState.grid);
+      let dWinner = end.checkEndDiagonal(gameState.grid);
       let endType = null;
-      if ((horizontalWinner != null) || (verticalWinner != null) || (diagonalWinner != null)) {
+      if ((hWinner != null) || (vWinner != null) || (dWinner != null)) {
         endType = "alignment";
       }
       let winner;
       if (endType === "alignment") {
-        winner = horizontalWinner || verticalWinner || diagonalWinner;
+        winner = hWinner || vWinner || dWinner;
       }
       const playersHaveRemainingTokens = tokens.checkAvailablePlayerTokens(gameState);
       if (!playersHaveRemainingTokens) {
@@ -64,7 +64,6 @@ const end = {
       let winner = null;
       if (player1Score > player2Score) {
         winner = "player:1";
-        window.alert(test)
       } else if (player1Score < player2Score) {
         winner = "player:2";
       } else {
