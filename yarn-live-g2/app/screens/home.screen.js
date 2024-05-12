@@ -3,7 +3,7 @@ import { StyleSheet, View, Button } from "react-native";
 export default function HomeScreen({ navigation }) {
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styles.background]}>
       <View>
         <Button
           title="Jouer en ligne"
@@ -23,8 +23,11 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#0f0c29",
     alignItems: "center",
     justifyContent: "center",
+  },
+  background: {
+    backgroundColor: "#0f0c29", // Couleur de fond
   }
 });
