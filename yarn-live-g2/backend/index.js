@@ -320,9 +320,6 @@ io.on("connection", (socket) => {
         "game.game-over",
         GameService.send.forPlayer.victoryState(VictoryResult)
       );
-      clearInterval(games[gameIndex].gameInterval);
-      games.splice(gameIndex, 1);
-      
       }
     games[gameIndex].gameState.deck = GameService.init.deck();
     games[gameIndex].gameState.choices = GameService.init.choices();

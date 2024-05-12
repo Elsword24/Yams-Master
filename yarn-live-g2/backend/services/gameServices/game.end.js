@@ -67,6 +67,7 @@ const end = {
       if (player1Score > player2Score) {
         winner = "player:1";
         console.log("The winner is player 1");
+        window.alert(test)
       } else if (player1Score < player2Score) {
         winner = "player:2";
         console.log("The winner is player 2");
