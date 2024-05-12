@@ -112,7 +112,7 @@ const createGame = (player1Socket, player2Socket, type) => {
   // push game into 'games' global array
   games.push(newGame);
 
-  const gameIndex = GameService.utils.findGameIndexById(games, newGame.idGame);
+  const gameIndex = GameService.util.findGameIndexById(games, newGame.idGame);
 
   // just notifying screens that game is starting
   games[gameIndex].player1Socket.emit(
@@ -197,7 +197,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("game.dices.roll", () => {
-    const gameIndex = GameService.utils.findGameIndexBySocketId(
+    const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
     );
@@ -253,16 +253,6 @@ io.on("connection", (socket) => {
       }
     }
 
-    if (games[gameIndex].gameState.choices.availableChoices.length > 0) {
-      const updatedAvailableChoices = GameService.choices.filterChoicesEnabler(
-        games[gameIndex].gameState.grid,
-        games[gameIndex].gameState.choices.availableChoices
-      );
-
-      games[gameIndex].gameState.choices.availableChoices =
-        updatedAvailableChoices;
-    }
-
     // Dice Animation
     setTimeout(() => {
       updateClientsViewDecks(games[gameIndex]);
@@ -271,11 +261,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("game.dices.lock", (idDice) => {
-    const gameIndex = GameService.utils.findGameIndexBySocketId(
+    const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
     );
-    const diceIndex = GameService.utils.findDiceIndexByDiceId(
+    const diceIndex = GameService.util.findDiceIndexByDiceId(
       games[gameIndex].gameState.deck.dices,
       idDice
     );
@@ -288,7 +278,7 @@ io.on("connection", (socket) => {
 
   socket.on("game.choices.selected", (data) => {
     // gestion des choix
-    const gameIndex = GameService.utils.findGameIndexBySocketId(
+    const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
     );
@@ -300,7 +290,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("game.grid.selected", (data) => {
-    const gameIndex = GameService.utils.findGameIndexBySocketId(
+    const gameIndex = GameService.util.findGameIndexBySocketId(
       games,
       socket.id
     );
