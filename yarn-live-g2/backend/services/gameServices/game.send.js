@@ -39,7 +39,6 @@ const send = {
             playerKey === game.gameState.currentTurn &&
             game.gameState.choice.availableChoice.length > 0,
           grid: updatedGrid,
-          // use this findPlayerIdBySocketId to get the player key by socket id
           socketIdPlayer1: game.player1Socket.id,
           socketIdPlayer2: game.player2Socket.id,
         };
@@ -51,7 +50,7 @@ const send = {
         };
       },
       gameTimer: (playerKey, gameState) => {
-        // Selon la clé du joueur on adapte la réponse (player / opponent)
+        // Adapt response according to current player
         const playerTimer =
           gameState.currentTurn === playerKey ? gameState.timer : 0;
         const opponentTimer =
