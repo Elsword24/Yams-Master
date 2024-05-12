@@ -55,11 +55,11 @@ const GRID_INIT = [
       { viewContent: "6", id: "brelan6", owner: null, canBeChecked: false },
     ],
     [
-      { viewContent: "2", id: "brelan2", owner: null, canBeChecked: false },
-      { viewContent: "Carré", id: "carre", owner: null, canBeChecked: false },
-      { viewContent: "Sec", id: "sec", owner: null, canBeChecked: false },
-      { viewContent: "Full", id: "full", owner: null, canBeChecked: false },
-      { viewContent: "5", id: "brelan5", owner: null, canBeChecked: false },
+      { viewContent: "2", id: "brelan2", owner:'player:1' , canBeChecked: false },
+      { viewContent: "Carré", id: "carre", owner:'player:1' , canBeChecked: false },
+      { viewContent: "Sec", id: "sec", owner: 'player:1', canBeChecked: false },
+      { viewContent: "Full", id: "full", owner:'player:1', canBeChecked: false },
+      { viewContent: "5", id: "brelan5", owner: 'player:1', canBeChecked: false },
     ],
     [
       { viewContent: "≤8", id: "moinshuit", owner: null, canBeChecked: false },

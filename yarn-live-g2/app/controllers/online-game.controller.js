@@ -31,19 +31,19 @@ export default function OnlineGameController() {
         socket.on('game.over.p1',(data) => {
             alert("Winner is : player 1")
             setTimeout(5000);
-            window.location(origin)
+            location.reload()
         });
 
         socket.on('game.over.p2',(data) => {
             alert("Winner is : player 2")
             setTimeout(5000);
-            window.location(origin)
+            location.reload()
         });
 
         socket.on('game.over.draw',(data) => {
             alert("There is no winner.");
             setTimeout(5000);
-            window.location(origin)
+            location.reload()
         })
 
     }, []);
