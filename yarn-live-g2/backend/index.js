@@ -235,15 +235,23 @@ io.on('connection', socket => {
     games[gameIndex].player1Socket.emit('game.timer', GameService.send.forPlayer.gameTimer('player:1', games[gameIndex].gameState));
     games[gameIndex].player2Socket.emit('game.timer', GameService.send.forPlayer.gameTimer('player:2', games[gameIndex].gameState));
 
+    GameService.score.detectAlignmentTypeAndScore(
+      games[gameIndex].gameState,
+      data.rowIndex,
+      data.cellIndex
+    ); 
+
     updateClientsViewDecks(games[gameIndex]);
     updateClientsViewChoices(games[gameIndex]);
     updateClientsViewGrid(games[gameIndex]);
   });
-
+  
   socket.on('disconnect', reason => {
     console.log(`[${socket.id}] socket disconnected - ${reason}`);
   });
 });
+
+
 
 // -----------------------------------
 // -------- SERVER METHODS -----------
